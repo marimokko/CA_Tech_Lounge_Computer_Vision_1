@@ -3,12 +3,12 @@ from tensorflow.keras.datasets import cifar10
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropout
 
-# Load and preprocess the data
+# データの読み込み
 (x_train, y_train), (x_test, y_test) = cifar10.load_data()
 x_train, x_test = x_train / 255.0, x_test / 255.0
 y_train, y_test = tf.keras.utils.to_categorical(y_train), tf.keras.utils.to_categorical(y_test)
 
-# Define and compile the model
+# モデルの定義
 model = Sequential([
     Conv2D(32, (3, 3), activation='relu', input_shape=(32, 32, 3)),
     MaxPooling2D((2, 2)),
@@ -23,8 +23,8 @@ model = Sequential([
 
 model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
-# Train the model
+# モデルの学習
 model.fit(x_train, y_train, epochs=10, validation_data=(x_test, y_test))
 
-# Save the model
+# モデルの保存
 model.save("cifar10_model.h5")
