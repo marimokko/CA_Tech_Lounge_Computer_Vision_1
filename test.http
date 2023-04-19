@@ -1,0 +1,9 @@
+POST http://localhost:8000/predict
+Content-Type: multipart/form-data; boundary=----BoundaryString1234
+
+------BoundaryString1234
+Content-Disposition: form-data; name="file"; filename="ogimage.png"
+Content-Type: image/png
+
+< Z:\home\cyberAgent\ogimage.png
+------BoundaryString1234--
