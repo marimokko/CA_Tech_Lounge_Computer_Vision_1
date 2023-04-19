@@ -7,19 +7,19 @@ import numpy as np
 import tensorflow as tf
 from fastapi.responses import JSONResponse
 
-# Load the saved model
+# 保存したモデルの読み込み
 def load_model():
     model = tf.keras.models.load_model("cifar10_model.h5")
     return model
 
 model = load_model()
 
-# Define the FastAPI app
+# FastAPIを定義
 app = FastAPI()
 
 class_names = ['airplane', 'automobile', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
 
-# Define the predict_image function
+# 予測用関数を定義
 def predict_image(image: Image.Image):
     image = image.resize((32, 32))
     image_array = np.array(image) / 255.0
@@ -29,6 +29,7 @@ def predict_image(image: Image.Image):
     confidence = float(np.max(predictions[0]))
     return predicted_class, confidence
 
+# HTTP POSTリクエストを受け付ける
 @app.post("/predict")
 async def predict(file: UploadFile = File(...)):
     image = Image.open(io.BytesIO(await file.read()))
